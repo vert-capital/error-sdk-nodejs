@@ -1,0 +1,29 @@
+{
+  "name": "error-sdk",
+  "version": "1.0.0",
+  "description": "Error SDK",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf index.js && rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript"
+  },
+  "author": "Victor Municelli Dário",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.2",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-typescript": "^11.1.2",
+    "@sentry/types": "^7.57.0",
+    "rollup": "^3.26.2",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@sentry/node": "^7.57.0"
+  },
+  "files": [
+    ".nvmrc",
+    "index.js",
+    "package.json",
+    "package-lock.json",
+    "tsconfig.json"
+  ]
+}
