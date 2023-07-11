@@ -2,9 +2,9 @@
   "name": "error-sdk",
   "version": "1.0.0",
   "description": "Error SDK",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "build": "rm -rf index.js && rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript"
+    "build": "rm -rf dist && rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript"
   },
   "author": "Victor Municelli Dário",
   "license": "ISC",
@@ -21,9 +21,9 @@
   },
   "files": [
     ".nvmrc",
-    "index.js",
     "package.json",
     "package-lock.json",
-    "tsconfig.json"
+    "tsconfig.json",
+    "dist"
   ]
 }

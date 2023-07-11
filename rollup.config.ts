@@ -6,7 +6,7 @@ export default {
 	input: 'src/index.ts',
 	external: ['@sentry/node'],
 	output: {
-		file: 'index.js',
+		file: './dist/index.js',
 		name: 'error',
 		format: 'cjs',
 		exports: 'named',
