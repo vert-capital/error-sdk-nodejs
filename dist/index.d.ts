@@ -1,3 +1,5 @@
+import { SentryService } from "./services/sentry";
+export { SentryService };
 export declare class AppError extends Error {
     statusCode: number;
     error: string;

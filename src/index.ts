@@ -1,5 +1,7 @@
 import { SentryService } from "./services/sentry";
 
+export { SentryService };
+
 const HttpStatusMap: { [status: number]: string } = {
   200: "Success",
   201: "Created",
