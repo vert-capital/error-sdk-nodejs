@@ -16,7 +16,7 @@
     "rollup": "^3.26.2",
     "typescript": "^5.1.6"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@sentry/node": "^7.57.0"
   },
   "files": [
