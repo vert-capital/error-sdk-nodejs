@@ -10,6 +10,7 @@ const HttpStatusMap: { [status: number]: string } = {
   403: "Bad Gateway",
   404: "Not Found",
   500: "Internal Server Error",
+  503: "Service Unavailable"
 };
 
 export class AppError extends Error {
@@ -76,8 +77,8 @@ export class InternalError extends AppError {
   }
 }
 export class UnavailableServiceError extends AppError {
-  constructor(message = "Unavailable service error") {
-    super(message, 500, "Unavailable Service Error");
+  constructor(message = "Service unavailable at the moment, try again later") {
+    super(message, 503);
   }
 }
 
@@ -88,7 +89,7 @@ export class BadRequestException extends AppError {
 }
 
 export class NotImplementedException extends AppError {
-  constructor(message = "Not implemented") {
+  constructor(message = "Operation not implemented") {
     super(message, 400, "Not Implemented");
   }
 }

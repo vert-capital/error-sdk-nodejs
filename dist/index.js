@@ -29,6 +29,7 @@
     403: "Bad Gateway",
     404: "Not Found",
     500: "Internal Server Error",
+    503: "Service Unavailable"
 };
 class AppError extends Error {
     constructor(message, statusCode, code, extra = null) {
@@ -83,8 +84,8 @@ class InternalError extends AppError {
     }
 }
 class UnavailableServiceError extends AppError {
-    constructor(message = "Unavailable service error") {
-        super(message, 500, "Unavailable Service Error");
+    constructor(message = "Service unavailable at the moment, try again later") {
+        super(message, 503);
     }
 }
 class BadRequestException extends AppError {
@@ -93,7 +94,7 @@ class BadRequestException extends AppError {
     }
 }
 class NotImplementedException extends AppError {
-    constructor(message = "Not implemented") {
+    constructor(message = "Operation not implemented") {
         super(message, 400, "Not Implemented");
     }
 }
