@@ -26,6 +26,7 @@ export class AppError extends Error {
     extra = null
   ) {
     super(message);
+    this.name = this.constructor.name;
     this.statusCode = statusCode || 500;
     this.error = code || HttpStatusMap[statusCode];
     this.extra = extra;

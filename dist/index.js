@@ -35,6 +35,7 @@ class AppError extends Error {
     constructor(message, statusCode, code, extra = null) {
         super(message);
         this.delaySendToSentry = false;
+        this.name = this.constructor.name;
         this.statusCode = statusCode || 500;
         this.error = code || HttpStatusMap[statusCode];
         this.extra = extra;
