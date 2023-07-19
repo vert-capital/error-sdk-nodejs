@@ -5,20 +5,20 @@
             // of transactions for performance monitoring.
             // We recommend adjusting this value in production
             tracesSampleRate: 1.0,
-            ...opts
+            ...opts,
         });
     }
     static capture(err, context, log = false) {
         if (log)
             console.error(err);
-        if (typeof err === 'string') {
+        if (typeof err === "string") {
             Sentry__namespace.captureException(new Error(err), context);
         }
         else if (err instanceof Error) {
             Sentry__namespace.captureException(err, context);
         }
         else {
-            Sentry__namespace.captureEvent(err);
+            Sentry__namespace.captureEvent(err, { captureContext: context });
         }
     }
 }const HttpStatusMap = {
@@ -29,7 +29,7 @@
     403: "Bad Gateway",
     404: "Not Found",
     500: "Internal Server Error",
-    503: "Service Unavailable"
+    503: "Service Unavailable",
 };
 class AppError extends Error {
     constructor(message, statusCode, code, extra = null) {
@@ -50,9 +50,16 @@ class AppError extends Error {
      */
     sendToSentry(logError = false) {
         SentryService.capture({
+            transaction: this.name,
             message: this.message,
             stack: this.stack,
-        }, { extra: { statusCode: this.statusCode, error: this.error, ...this.extra } }, logError);
+        }, {
+            contexts: {
+                statusCode: this.statusCode,
+                error: this.error,
+                ...this.extra,
+            },
+        }, logError);
         return this;
     }
     /**
@@ -113,5 +120,10 @@ class UnsupportedAssetException extends AppError {
         super(message, 400, "Unsupported asset");
     }
 }
+class UnderPressureError extends AppError {
+    constructor(message = "Service Unavailable") {
+        super(message, 503);
+    }
+}
 class CryptocompareError extends AppError {
-}exports.AppError=AppError;exports.BadRequestException=BadRequestException;exports.CryptocompareError=CryptocompareError;exports.InternalError=InternalError;exports.NotFoundException=NotFoundException;exports.NotImplementedException=NotImplementedException;exports.SentryService=SentryService;exports.UnauthorizedException=UnauthorizedException;exports.UnavailableServiceError=UnavailableServiceError;exports.UnsupportedAssetException=UnsupportedAssetException;
+}exports.AppError=AppError;exports.BadRequestException=BadRequestException;exports.CryptocompareError=CryptocompareError;exports.InternalError=InternalError;exports.NotFoundException=NotFoundException;exports.NotImplementedException=NotImplementedException;exports.SentryService=SentryService;exports.UnauthorizedException=UnauthorizedException;exports.UnavailableServiceError=UnavailableServiceError;exports.UnderPressureError=UnderPressureError;exports.UnsupportedAssetException=UnsupportedAssetException;

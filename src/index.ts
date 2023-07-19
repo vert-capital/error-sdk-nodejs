@@ -10,7 +10,7 @@ const HttpStatusMap: { [status: number]: string } = {
   403: "Bad Gateway",
   404: "Not Found",
   500: "Internal Server Error",
-  503: "Service Unavailable"
+  503: "Service Unavailable",
 };
 
 export class AppError extends Error {
@@ -19,7 +19,12 @@ export class AppError extends Error {
   extra: any;
   delaySendToSentry = false;
 
-  constructor(message: string, statusCode: number, code?: string, extra = null) {
+  constructor(
+    message: string,
+    statusCode: number,
+    code?: string,
+    extra = null
+  ) {
     super(message);
     this.statusCode = statusCode || 500;
     this.error = code || HttpStatusMap[statusCode];
@@ -38,10 +43,17 @@ export class AppError extends Error {
   sendToSentry(logError = false) {
     SentryService.capture(
       {
+        transaction: this.name,
         message: this.message,
         stack: this.stack,
       },
-      { extra: { statusCode: this.statusCode, error: this.error, ...this.extra } },
+      {
+        contexts: {
+          statusCode: this.statusCode,
+          error: this.error,
+          ...this.extra,
+        },
+      },
       logError
     );
     return this;
@@ -109,6 +121,12 @@ export class NotFoundException extends AppError {
 export class UnsupportedAssetException extends AppError {
   constructor(message = "Unsupported asset") {
     super(message, 400, "Unsupported asset");
+  }
+}
+
+export class UnderPressureError extends AppError {
+  constructor(message = "Service Unavailable") {
+    super(message, 503);
   }
 }
 

@@ -46,5 +46,8 @@ export declare class NotFoundException extends AppError {
 export declare class UnsupportedAssetException extends AppError {
     constructor(message?: string);
 }
+export declare class UnderPressureError extends AppError {
+    constructor(message?: string);
+}
 export declare class CryptocompareError extends AppError {
 }

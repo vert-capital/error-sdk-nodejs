@@ -1,5 +1,5 @@
-import * as Sentry from '@sentry/node';
-import { CaptureContext } from '@sentry/types';
+import * as Sentry from "@sentry/node";
+import { CaptureContext } from "@sentry/types";
 
 export class SentryService {
   static init(opts: Sentry.NodeOptions = {}) {
@@ -8,18 +8,22 @@ export class SentryService {
       // of transactions for performance monitoring.
       // We recommend adjusting this value in production
       tracesSampleRate: 1.0,
-	  ...opts
+      ...opts,
     });
   }
 
-  static capture(err: string | Error | Sentry.Event, context?: CaptureContext, log = false) {
+  static capture(
+    err: string | Error | Sentry.Event,
+    context?: CaptureContext,
+    log = false
+  ) {
     if (log) console.error(err);
-    if (typeof err === 'string') {
+    if (typeof err === "string") {
       Sentry.captureException(new Error(err), context);
     } else if (err instanceof Error) {
       Sentry.captureException(err, context);
     } else {
-      Sentry.captureEvent(err);
+      Sentry.captureEvent(err, { captureContext: context });
     }
   }
 }
